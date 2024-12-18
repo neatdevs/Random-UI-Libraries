@@ -1,0 +1,205 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+local coreGui = game:GetService("CoreGui")
+local runService = game:GetService("RunService")
+
+local Main = Instance.new("ScreenGui")
+Main.Parent = runService:IsStudio() and LocalPlayer:WaitForChild("PlayerGui") or coreGui
+Main.Name = "CKUL"
+
+local Window = Instance.new("Frame")
+Window.Name = "C00lGui UI Library"
+Window.Parent = Main
+Window.Active = true
+Window.AnchorPoint = Vector2.new(0, 0.5)
+Window.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Window.BorderColor3 = Color3.fromRGB(255, 0, 0)
+Window.Draggable = true
+Window.Position = UDim2.new(0.300000012, 9, 0.5, 0)
+Window.Size = UDim2.new(0, 510, 0, 400)
+
+function CreateWindow(name)
+	local TitleBar = Instance.new("Frame")
+	TitleBar.Name = "TitleBar"
+	TitleBar.Parent = Window
+	TitleBar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	TitleBar.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	TitleBar.Size = UDim2.new(1, 0, 0, 25)
+	
+	local TitleText = Instance.new("TextLabel")
+	TitleText.Name = "TitleText"
+	TitleText.Parent = TitleBar
+	TitleText.BackgroundTransparency = 1.000
+	TitleText.Position = UDim2.new(0, 5, 0, 0)
+	TitleText.Size = UDim2.new(1, -30, 1, 0)
+	TitleText.Font = Enum.Font.Code
+	TitleText.Text = name
+	TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TitleText.TextSize = 20.000
+	TitleText.TextXAlignment = Enum.TextXAlignment.Left
+	
+	local CloseButton = Instance.new("TextButton")
+	CloseButton.Name = "CloseButton"
+	CloseButton.Parent = TitleBar
+	CloseButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	CloseButton.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	CloseButton.Position = UDim2.new(1, -25, 0, 0)
+	CloseButton.Size = UDim2.new(0, 25, 1, 0)
+	CloseButton.Font = Enum.Font.Code
+	CloseButton.Text = "X"
+	CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	CloseButton.TextSize = 20.000
+	CloseButton.MouseButton1Click:Connect(function()
+		for i, v in pairs(game:GetService("CoreGui"):GetDescendants()) do
+			if v.Name == "CKUL" then
+				v:Destroy()
+			end
+		end
+	end)
+end
+
+local TabContainer = Instance.new("ScrollingFrame")
+TabContainer.Name = "TabContainer"
+TabContainer.Parent = Window
+TabContainer.BackgroundTransparency = 1.000
+TabContainer.BorderSizePixel = 0
+TabContainer.Position = UDim2.new(0, 0, 0, 25)
+TabContainer.Size = UDim2.new(1, 0, 0, 25)
+TabContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
+TabContainer.ScrollBarThickness = 0
+
+local UIGridLayout = Instance.new("UIGridLayout")
+UIGridLayout.Parent = TabContainer
+UIGridLayout.FillDirection = Enum.FillDirection.Vertical
+UIGridLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
+UIGridLayout.CellPadding = UDim2.new(0, 0, 0, 5)
+UIGridLayout.CellSize = UDim2.new(0, 100, 0, 20)
+
+local UIPadding = Instance.new("UIPadding")
+UIPadding.Parent = TabContainer
+UIPadding.PaddingLeft = UDim.new(0, 10)
+
+function CreateTab(name, callback)
+	local Inactive = Instance.new("TextButton")
+	Inactive.Name = name
+	Inactive.Parent = TabContainer
+	Inactive.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Inactive.BackgroundTransparency = 0
+	Inactive.BorderColor3 = Color3.fromRGB(255,0,0)
+	Inactive.BorderSizePixel = 1
+	Inactive.Size = UDim2.new(1, 0, 1, 0)
+	Inactive.Font = Enum.Font.Code
+	Inactive.Text = name
+	Inactive.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Inactive.TextSize = 14.000
+	Inactive.MouseButton1Click:Connect(callback)
+end
+
+local function createContentFrame()
+	local ContentContainer = Instance.new("ScrollingFrame")
+	ContentContainer.Name = "ContentContainer"
+	ContentContainer.Parent = Window
+	ContentContainer.AnchorPoint = Vector2.new(0, 1)
+	ContentContainer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	ContentContainer.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	ContentContainer.Position = UDim2.new(0, 0, 1, 0)
+	ContentContainer.Size = UDim2.new(1, 0, 1, -50)
+	ContentContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
+	ContentContainer.ScrollBarThickness = 5
+
+	local UIPadding_2 = Instance.new("UIPadding")
+	UIPadding_2.Parent = ContentContainer
+	UIPadding_2.PaddingLeft = UDim.new(0, 10)
+	UIPadding_2.PaddingTop = UDim.new(0, 20)
+	
+	local UIListLayout = Instance.new("UIListLayout")
+	UIListLayout.Parent = ContentContainer
+	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout.Padding = UDim.new(0, 10)
+	return ContentContainer
+	
+end
+
+local wonderOfU = CreateWindow("Cutie UI LIbrary")
+
+local GameBreakingTab = createContentFrame()
+local TeamChangeTab = createContentFrame()
+local LocalPlayerTab = createContentFrame()
+local EffectsTab = createContentFrame()
+local CreditsTab = createContentFrame()
+
+local function switchTab(tab)
+	GameBreakingTab.Visible = false
+	TeamChangeTab.Visible = false
+	LocalPlayerTab.Visible = false
+	EffectsTab.Visible = false
+	CreditsTab.Visible = false
+	tab.Visible = true
+end
+
+CreateTab("Game", function() switchTab(GameBreakingTab) end)
+CreateTab("Team", function() switchTab(TeamChangeTab) end)
+CreateTab("Player", function() switchTab(LocalPlayerTab) end)
+CreateTab("Effects", function() switchTab(EffectsTab) end)
+CreateTab("Credits", function() switchTab(CreditsTab) end)
+
+switchTab(GameBreakingTab)
+
+function createButton(parent, text, callback)
+	local Button = Instance.new("TextButton")
+	Button.Name = "Button"
+	Button.Parent = parent
+	Button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Button.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	Button.Size = UDim2.new(1, -10, 0, 35)
+	Button.Font = Enum.Font.Code
+	Button.Text = text
+	Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Button.TextSize = 15.000
+	Button.Active = true
+	Button.MouseButton1Click:Connect(callback)
+end
+
+local function CreateTextBox(parent, placeholderText)
+	local Label = Instance.new("Frame")
+	Label.Name = "Label"
+	Label.Parent = parent
+	Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Label.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	Label.Size = UDim2.new(1, -10, 0, 35)
+	
+	local TextBox = Instance.new("TextBox")
+	TextBox.Parent = Label
+	TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.BackgroundTransparency = 1.000
+	TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TextBox.BorderSizePixel = 0
+	TextBox.Size = UDim2.new(1, 0, 1, 0)
+	TextBox.Text = ""
+	TextBox.PlaceholderText = placeholderText
+	TextBox.Font = Enum.Font.Code
+	TextBox.PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.TextSize = 14.000
+	
+	return TextBox
+end
+
+createButton(CreditsTab, "Prints Hello World", function ()
+    print("Hello World!")
+end)
+
+local Test = CreateTextBox(CreditsTab, "idk man")
+
+local CreditsLabel = Instance.new("TextLabel")
+CreditsLabel.Size = UDim2.new(1, -20, 1, -20)
+CreditsLabel.Position = UDim2.new(0, 10, 0, 10)
+CreditsLabel.BackgroundTransparency = 1
+CreditsLabel.Text = "Credits\n\nDeveloper: Teemsploit\nTesting: Catgirl"
+CreditsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+CreditsLabel.Font = Enum.Font.SourceSans
+CreditsLabel.TextSize = 18
+CreditsLabel.TextStrokeTransparency = 0.5
+CreditsLabel.TextWrapped = true
+CreditsLabel.Parent = CreditsTab
